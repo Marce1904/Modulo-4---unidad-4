@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+require('dotenv').config();
+
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require("./routes/admin/login");
@@ -25,6 +28,51 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin/login', loginRouter);
+
+var pool = require('./models/db');
+pool.query('select * from usuarios').then(function(resultados){
+  console.log(resultados)
+});
+
+
+
+
+// Insertamos un usuario INSERT------------
+
+// var pool = require('./models/db');
+// var obj = {
+//   usuarios: 'Pablo',
+//   password: '4388',
+// }
+
+// pool.query('insert into usuarios set ?', [obj]).then(function(resultados){
+//   console.log(resultados);
+// });
+
+// UPDATE------------------
+
+// var pool = require('./models/db');
+// var id = 5;
+// var obj = {
+//   usuarios: 'Juan',
+//   password: '4566',
+// }
+
+// pool.query("update usuarios set ? where id=?", [obj, id]).then(function(resultados){
+//   console.log(resultados);
+// });
+
+
+
+// DELETE-------------------
+
+// var pool = require('./models/db');
+// var id = 4;
+
+// pool.query("delete from usuarios where id = ?", [id]).then(function(resultados){
+//   console.log(resultados);
+// });
+
 
 
 // catch 404 and forward to error handler
